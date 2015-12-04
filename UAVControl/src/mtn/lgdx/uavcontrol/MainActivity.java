@@ -35,25 +35,43 @@ public class MainActivity extends Activity implements OnLongClickListener, OnSee
 	private SeekBar skb_RL;					//左转右转
 	private SeekBar skb_rotate;				//旋转
 	
-	private  Handler handler;
 	private ConnectServer connectServer = null; 
 	
-	public static final int ACCELERATE_MAX 		= 1523;			//油门最大值
-    public static final int RIGHT_LEFT_MAX 		= 1523;			//左右最大值
-    public static final int ROTATE_MAX 			= 1523;			//旋转最大值
-    public static final int FORWARD_BACK_MAX	= 1523;			//前后最大值
+	private static final int ACCELERATE_MAX 		= 1523;			//油门最大值
+	private static final int RIGHT_LEFT_MAX 		= 1523;			//左右最大值
+	private static final int ROTATE_MAX 			= 1523;			//旋转最大值
+	private static final int FORWARD_BACK_MAX		= 1523;			//前后最大值
     
-    public static final int ACCELERATE_MIN 		= 523;			//油门的最小值
-    public static final int RIGHT_LEFT_MIN 		= 523;			//左右的最小值
-    public static final int ROTATE_MIN 			= 523;			//旋转的最小值
-    public static final int FORWARD_BACK_MIN	= 523;			//前后的最小值
+	private static final int ACCELERATE_MIN 		= 523;			//油门的最小值
+	private static final int RIGHT_LEFT_MIN 		= 523;			//左右的最小值
+	private static final int ROTATE_MIN 			= 523;			//旋转的最小值
+	private static final int FORWARD_BACK_MIN		= 523;			//前后的最小值
     
-    public static final int SEEKBAR_MAX = 1000;					//滑动条最大值
+	private static final int SEEKBAR_MAX 			= 1000;			//滑动条最大值
     
     private String ipaddr = "";			//保存服务器IP地址或域名
     
     SharedPreferences preferences;
     SharedPreferences.Editor preferences_editor;
+    
+    private Handler handler = new Handler(){
+    	@Override
+    	public void handleMessage(Message msg) {
+    		super.handleMessage(msg);
+    		switch (msg.what) {
+			case 1:
+				setEnable(true);
+				Toast.makeText(MainActivity.this, "成功连接到服务器", Toast.LENGTH_SHORT).show();
+				break;
+			case 3:
+				Toast.makeText(MainActivity.this, "无法连接到服务器", Toast.LENGTH_SHORT).show();
+				break;
+			default:
+				break;
+			}
+    	}
+    };
+    
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,24 +105,6 @@ public class MainActivity extends Activity implements OnLongClickListener, OnSee
         skb_rotate.setOnSeekBarChangeListener(this);
         
         setEnable(false);	//没有连上服务器的时候禁用操作
-        
-        handler = new Handler(){
-        	@Override
-        	public void handleMessage(Message msg) {
-        		super.handleMessage(msg);
-        		switch (msg.what) {
-				case 1:
-					setEnable(true);
-					Toast.makeText(MainActivity.this, "成功连接到服务器", Toast.LENGTH_SHORT).show();
-					break;
-				case 3:
-					Toast.makeText(MainActivity.this, "无法连接到服务器", Toast.LENGTH_SHORT).show();
-					break;
-				default:
-					break;
-				}
-        	}
-        };
         
         preferences = getSharedPreferences("ipaddr", Context.MODE_PRIVATE);
         preferences_editor = preferences.edit();
