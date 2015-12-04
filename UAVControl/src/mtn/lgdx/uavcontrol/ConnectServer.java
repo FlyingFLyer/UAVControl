@@ -39,22 +39,6 @@ public class ConnectServer extends Thread {
 			mSocket = new Socket(ip, port);
 			
 			sendMessagetoHandler(1);		//连接成功
-//			String line = null;
-//			int len = -1;
-//		
-//			
-//			byte buffer [] = new byte[256];
-//			while ((len=mSocket.getInputStream().read(buffer)) !=-1) {
-//				line = new String(buffer, 0, len);
-//				sendMessagetoHandler(2,line);
-//				for (int i = 0; (i < buffer.length)&&(buffer[i]!=0); i++) {
-//					buffer[i] = 0;
-//				}
-//			}
-			
-			//reader.close();
-			//writer.close();
-			//mSocket.close();
 			
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
@@ -122,13 +106,5 @@ public class ConnectServer extends Thread {
 		  }
 		  return;
 	  }
-
-	public Socket getSocket() {
-		return mSocket;
-	}
-
-	public void setSocket(Socket mSocket) {
-		this.mSocket = mSocket;
-	}
 
 }
