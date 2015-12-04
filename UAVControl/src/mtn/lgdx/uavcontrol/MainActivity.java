@@ -22,18 +22,18 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity implements OnLongClickListener, OnSeekBarChangeListener, OnClickListener {
 	
-	private static final String IP_DNS = "uavuav.oicp.net";		//����������
-	private static final int PORT = 1111;						//�������˿ں�
+	private static final String IP_DNS = "uavuav.oicp.net";		//服务器域名
+	private static final int PORT = 1111;						//服务器端口号
 	
-	private EditText ipAddress;			//IP��ַ�����
-	private Button btnConnectServer;	//���ӷ�����
+	private EditText ipAddress;			//IP地址输入框
+	private Button btnConnectServer;	//连接服务器
 	
-	private ImageButton btnStartButton;		//������ť
+	private ImageButton btnStartButton;		//启动按钮
 	
-	private SeekBar skb_accelerator;		//����
-	private SeekBar skb_FB;					//ǰ������
-	private SeekBar skb_RL;					//��ת��ת
-	private SeekBar skb_rotate;				//��ת
+	private SeekBar skb_accelerator;		//油门
+	private SeekBar skb_FB;					//前进后退
+	private SeekBar skb_RL;					//左转右转
+	private SeekBar skb_rotate;				//旋转
 	
 	private  Handler handler;
 	private ConnectServer connectServer = null; 
@@ -43,20 +43,18 @@ public class MainActivity extends Activity implements OnLongClickListener, OnSee
     public static final int ROTATE_MAX 			= 1523;			//旋转最大值
     public static final int FORWARD_BACK_MAX	= 1523;			//前后最大值
     
-    public static final int ACCELERATE_MIN 		= 523;			//���ŵ���Сֵ
-    public static final int RIGHT_LEFT_MIN 		= 523;			//���ҵ���Сֵ
-    public static final int ROTATE_MIN 			= 523;			//��ת����Сֵ
-    public static final int FORWARD_BACK_MIN	= 523;			//ǰ�����Сֵ
+    public static final int ACCELERATE_MIN 		= 523;			//油门的最小值
+    public static final int RIGHT_LEFT_MIN 		= 523;			//左右的最小值
+    public static final int ROTATE_MIN 			= 523;			//旋转的最小值
+    public static final int FORWARD_BACK_MIN	= 523;			//前后的最小值
     
-    public static final int SEEKBAR_MAX = 1000;					//���������ֵ
+    public static final int SEEKBAR_MAX = 1000;					//滑动条最大值
     
-    private String ipaddr = "";			//���������IP��ַ������
+    private String ipaddr = "";			//保存服务器IP地址或域名
     
     SharedPreferences preferences;
     SharedPreferences.Editor preferences_editor;
     
-    private int accelerate_cnt = 0;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +86,7 @@ public class MainActivity extends Activity implements OnLongClickListener, OnSee
         skb_RL.setOnSeekBarChangeListener(this);
         skb_rotate.setOnSeekBarChangeListener(this);
         
-        setEnable(false);	//û�����Ϸ�������ʱ����ò���
+        setEnable(false);	//没有连上服务器的时候禁用操作
         
         handler = new Handler(){
         	@Override
@@ -97,10 +95,10 @@ public class MainActivity extends Activity implements OnLongClickListener, OnSee
         		switch (msg.what) {
 				case 1:
 					setEnable(true);
-					Toast.makeText(MainActivity.this, "�ɹ����ӵ�������", Toast.LENGTH_SHORT).show();
+					Toast.makeText(MainActivity.this, "成功连接到服务器", Toast.LENGTH_SHORT).show();
 					break;
 				case 3:
-					Toast.makeText(MainActivity.this, "�޷����ӵ�������", Toast.LENGTH_SHORT).show();
+					Toast.makeText(MainActivity.this, "无法连接到服务器", Toast.LENGTH_SHORT).show();
 					break;
 				default:
 					break;
@@ -164,19 +162,19 @@ public class MainActivity extends Activity implements OnLongClickListener, OnSee
 		int cmd_data = 0;
 		int cmd_type = 0;
 		switch (seekBar.getId()) {
-		case R.id.skb1:		//����
+		case R.id.skb1:		//油门
 			cmd_type = UAVCmd.ACCELERATOR;
-			cmd_data = (int)(ACCELERATE_MIN+progress);	//progress��ֵ����ǽ���
+			cmd_data = (int)(ACCELERATE_MIN+progress);	
 			break;
-		case R.id.skb2:		//����
+		case R.id.skb2:		//左右
 			cmd_type = UAVCmd.RIGHT_LEFT;
 			cmd_data = (int)(RIGHT_LEFT_MIN+progress);
 			break;	
-		case R.id.skb3:		//��ת
+		case R.id.skb3:		//旋转
 			cmd_type = UAVCmd.ROTATE;
 			cmd_data = (int)(ROTATE_MIN+progress);
 			break;
-		case R.id.skb4:		//ǰ��
+		case R.id.skb4:		//前后
 			cmd_type = UAVCmd.FORWARD_BACK;
 			cmd_data = (int)(FORWARD_BACK_MIN+progress);
 			break;
@@ -198,16 +196,16 @@ public class MainActivity extends Activity implements OnLongClickListener, OnSee
 		int cmd_type = 0;
 		seekBar.setProgress(seekBar.getMax()/2);
 		switch (seekBar.getId()) {
-		case R.id.skb1:		//����
+		case R.id.skb1:		//油门
 			cmd_type = UAVCmd.ACCELERATOR;
 			break;
-		case R.id.skb2:		//����
+		case R.id.skb2:		//左右
 			cmd_type = UAVCmd.RIGHT_LEFT;
 			break;
-		case R.id.skb3:		//��ת
+		case R.id.skb3:		//旋转
 			cmd_type = UAVCmd.ROTATE;
 			break;
-		case R.id.skb4:		//ǰ��
+		case R.id.skb4:		//前后
 			cmd_type = UAVCmd.FORWARD_BACK;
 			break;
 		default:
@@ -235,18 +233,18 @@ public class MainActivity extends Activity implements OnLongClickListener, OnSee
 	}
 	
 	/**
-	 * �������ӷ������߳�ȥ���ӷ�����
+	 * 创建连接服务器线程去连接服务器
 	 */
 	private void ConnectToServer(){
 		connectServer = new ConnectServer(ipAddress.getText().toString(), PORT, handler);	
 		connectServer.start();
-		//����IP��ַ
+		//保存IP地址
 		preferences_editor.putString("ipaddr", ipAddress.getText().toString());
 		preferences_editor.commit();
 	}
 	
 	/**
-	 * �����˻���������͸�������
+	 *把无人机操作命令发送给服务器
 	 * @param cmd
 	 */
 	private void SendCmdToServer(ConnectServer thread , int cmd){
@@ -256,7 +254,7 @@ public class MainActivity extends Activity implements OnLongClickListener, OnSee
 	}
 	
 	/**
-     * �÷�������enable/disable�⼸���ؼ���ֻ�гɹ����ӷ������Ժ���Щ�ؼ��ſ���
+     * 该方法用来enable/disable这几个控件，只有成功连接服务器以后，这些控件才可用
     */
     private void setEnable(boolean enabled){
     	skb_accelerator.setEnabled(enabled);
@@ -273,8 +271,6 @@ public class MainActivity extends Activity implements OnLongClickListener, OnSee
 				public void run() {
 					try {
 						Thread.sleep(500);
-						//mConnectThread.write("1".getBytes());
-						//mConnectThread.write(UAVCmd.START_DELAY<<12);
 						SendCmdToServer(connectServer, UAVCmd.START_DELAY<<12);
 					} catch (InterruptedException e) {
 						e.printStackTrace();

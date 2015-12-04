@@ -23,7 +23,7 @@ public class ConnectServer extends Thread {
 	private BufferedWriter writer = null;
 	private BufferedReader reader = null;
 	private Handler mHandler = null;
-	private static final String TAG = "ConnectThread";
+	private static final String TAG = "ConnectServer";
 	
 	public ConnectServer(String ip,int port,Handler handler) {
 		this.ip = ip;
@@ -38,7 +38,7 @@ public class ConnectServer extends Thread {
 		try {
 			mSocket = new Socket(ip, port);
 			
-			sendMessagetoHandler(1);		//Á¬½Ó³É¹¦
+			sendMessagetoHandler(1);		//è¿žæŽ¥æˆåŠŸ
 //			String line = null;
 //			int len = -1;
 //		
@@ -58,11 +58,11 @@ public class ConnectServer extends Thread {
 			
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
-			sendMessagetoHandler(3, "");
+			sendMessagetoHandler(3);
 			Log.e(TAG, "socket error");
 		} catch (IOException e) {
 			e.printStackTrace();
-			sendMessagetoHandler(3, "");
+			sendMessagetoHandler(3);
 			Log.e(TAG, "socket error");
 		}
 	}
@@ -83,7 +83,7 @@ public class ConnectServer extends Thread {
 		  Socket s = mSocket;
 		  if (s != null) {
 			try {
-				//ÏÈ·¢¸ß°ËÎ»£¬ºó·¢µÍ°ËÎ»
+				//å…ˆå‘é«˜å…«ä½ï¼ŒåŽå‘ä½Žå…«ä½
 				s.getOutputStream().write((oneByte & 0xffff)>>8);
 				s.getOutputStream().write(oneByte & 0xff);
 				s.getOutputStream().flush();

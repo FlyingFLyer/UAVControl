@@ -4,19 +4,19 @@ import android.R.integer;
 
 public class UAVCmd {
 	
-	public static final int ACCELERATOR 	= 0X1;	//ÓÍÃÅ
-	public static final int RIGHT_LEFT 		= 0X2;	//×óÓÒ
-	public static final int ROTATE 			= 0X3;	//Ðý×ª
-	public static final int FORWARD_BACK 	= 0X4;	//Ç°ºó
+	public static final int ACCELERATOR 	= 0X1;	//æ²¹é—¨
+	public static final int RIGHT_LEFT 		= 0X2;	//å·¦å³
+	public static final int ROTATE 			= 0X3;	//æ—‹è½¬
+	public static final int FORWARD_BACK 	= 0X4;	//å‰åŽ
 	
-	public static final int START 			= 0X5;	//Æô¶¯ÃüÁî
-	public static final int START_DELAY 	= 0X6;	//Æô¶¯ÑÓÊ±ÃüÁî
+	public static final int START 			= 0X5;	//å¯åŠ¨å‘½ä»¤
+	public static final int START_DELAY 	= 0X6;	//å¯åŠ¨å»¶æ—¶å‘½ä»¤
 	
 	
-	public static final int MEDIAN 		= 0X3FF; 	//»¬¶¯ÌõÔÚÖÐ¼äÎ»ÖÃ·¢ËÍµÄÊý¾Ý
+	public static final int MEDIAN 		= 0X3FF; 	//æ»‘åŠ¨æ¡åœ¨ä¸­é—´ä½ç½®å‘é€çš„æ•°æ®
 
 	public static int FormatCmd(int type , int data ){
-		//·¢ËÍÁ½¸ö×Ö½ÚµÄÃüÁî,×î¸ßµÄËÄÎ»±íÊ¾ÃüÁîÀàÐÍ
+		//å‘é€ä¸¤ä¸ªå­—èŠ‚çš„å‘½ä»¤,æœ€é«˜çš„å››ä½è¡¨ç¤ºå‘½ä»¤ç±»åž‹
 		return ((type<<12 & 0xffff) + data);
 	}
 }
