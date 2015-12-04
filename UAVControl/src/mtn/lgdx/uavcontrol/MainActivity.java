@@ -22,35 +22,35 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity implements OnLongClickListener, OnSeekBarChangeListener, OnClickListener {
 	
-	private static final String IP_DNS = "uavuav.oicp.net";		//·şÎñÆ÷ÓòÃû
-	private static final int PORT = 1111;						//·şÎñÆ÷¶Ë¿ÚºÅ
+	private static final String IP_DNS = "uavuav.oicp.net";		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private static final int PORT = 1111;						//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¿Úºï¿½
 	
-	private EditText ipAddress;			//IPµØÖ·ÊäÈë¿ò
-	private Button btnConnectServer;	//Á¬½Ó·şÎñÆ÷
+	private EditText ipAddress;			//IPï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½
+	private Button btnConnectServer;	//ï¿½ï¿½ï¿½Ó·ï¿½ï¿½ï¿½ï¿½ï¿½
 	
-	private ImageButton btnStartButton;		//Æô¶¯°´Å¥
+	private ImageButton btnStartButton;		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¥
 	
-	private SeekBar skb_accelerator;		//ÓÍÃÅ
-	private SeekBar skb_FB;					//Ç°½øºóÍË
-	private SeekBar skb_RL;					//×ó×ªÓÒ×ª
-	private SeekBar skb_rotate;				//Ğı×ª
+	private SeekBar skb_accelerator;		//ï¿½ï¿½ï¿½ï¿½
+	private SeekBar skb_FB;					//Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private SeekBar skb_RL;					//ï¿½ï¿½×ªï¿½ï¿½×ª
+	private SeekBar skb_rotate;				//ï¿½ï¿½×ª
 	
 	private  Handler handler;
 	private ConnectServer connectServer = null; 
 	
-	public static final int ACCELERATE_MAX 		= 1523;			//ÓÍÃÅµÄ×î´óÖµ
-    public static final int RIGHT_LEFT_MAX 		= 1523;			//×óÓÒµÄ×î´óÖµ
-    public static final int ROTATE_MAX 			= 1523;			//Ğı×ªµÄ×î´óÖµ
-    public static final int FORWARD_BACK_MAX	= 1523;			//Ç°ºóµÄ×î´óÖµ
+	public static final int ACCELERATE_MAX 		= 1523;			//æ²¹é—¨æœ€å¤§å€¼
+    public static final int RIGHT_LEFT_MAX 		= 1523;			//å·¦å³æœ€å¤§å€¼
+    public static final int ROTATE_MAX 			= 1523;			//æ—‹è½¬æœ€å¤§å€¼
+    public static final int FORWARD_BACK_MAX	= 1523;			//å‰åæœ€å¤§å€¼
     
-    public static final int ACCELERATE_MIN 		= 523;			//ÓÍÃÅµÄ×îĞ¡Öµ
-    public static final int RIGHT_LEFT_MIN 		= 523;			//×óÓÒµÄ×îĞ¡Öµ
-    public static final int ROTATE_MIN 			= 523;			//Ğı×ªµÄ×îĞ¡Öµ
-    public static final int FORWARD_BACK_MIN	= 523;			//Ç°ºóµÄ×îĞ¡Öµ
+    public static final int ACCELERATE_MIN 		= 523;			//ï¿½ï¿½ï¿½Åµï¿½ï¿½ï¿½Ğ¡Öµ
+    public static final int RIGHT_LEFT_MIN 		= 523;			//ï¿½ï¿½ï¿½Òµï¿½ï¿½ï¿½Ğ¡Öµ
+    public static final int ROTATE_MIN 			= 523;			//ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½Ğ¡Öµ
+    public static final int FORWARD_BACK_MIN	= 523;			//Ç°ï¿½ï¿½ï¿½ï¿½ï¿½Ğ¡Öµ
     
-    public static final int SEEKBAR_MAX = 1000;					//»¬¶¯Ìõ×î´óÖµ
+    public static final int SEEKBAR_MAX = 1000;					//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
     
-    private String ipaddr = "";			//±£´æ·şÎñÆ÷IPµØÖ·»òÓòÃû
+    private String ipaddr = "";			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½IPï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     
     SharedPreferences preferences;
     SharedPreferences.Editor preferences_editor;
@@ -88,7 +88,7 @@ public class MainActivity extends Activity implements OnLongClickListener, OnSee
         skb_RL.setOnSeekBarChangeListener(this);
         skb_rotate.setOnSeekBarChangeListener(this);
         
-        setEnable(false);	//Ã»ÓĞÁ¬ÉÏ·şÎñÆ÷µÄÊ±ºò½ûÓÃ²Ù×÷
+        setEnable(false);	//Ã»ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Ã²ï¿½ï¿½ï¿½
         
         handler = new Handler(){
         	@Override
@@ -97,10 +97,10 @@ public class MainActivity extends Activity implements OnLongClickListener, OnSee
         		switch (msg.what) {
 				case 1:
 					setEnable(true);
-					Toast.makeText(MainActivity.this, "³É¹¦Á¬½Óµ½·şÎñÆ÷", Toast.LENGTH_SHORT).show();
+					Toast.makeText(MainActivity.this, "ï¿½É¹ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", Toast.LENGTH_SHORT).show();
 					break;
 				case 3:
-					Toast.makeText(MainActivity.this, "ÎŞ·¨Á¬½Óµ½·şÎñÆ÷", Toast.LENGTH_SHORT).show();
+					Toast.makeText(MainActivity.this, "ï¿½Ş·ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", Toast.LENGTH_SHORT).show();
 					break;
 				default:
 					break;
@@ -164,19 +164,19 @@ public class MainActivity extends Activity implements OnLongClickListener, OnSee
 		int cmd_data = 0;
 		int cmd_type = 0;
 		switch (seekBar.getId()) {
-		case R.id.skb1:		//ÓÍÃÅ
+		case R.id.skb1:		//ï¿½ï¿½ï¿½ï¿½
 			cmd_type = UAVCmd.ACCELERATOR;
-			cmd_data = (int)(ACCELERATE_MIN+progress);	//progressÊıÖµ±ä´óÊÇ½µËÙ
+			cmd_data = (int)(ACCELERATE_MIN+progress);	//progressï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½Ç½ï¿½ï¿½ï¿½
 			break;
-		case R.id.skb2:		//×óÓÒ
+		case R.id.skb2:		//ï¿½ï¿½ï¿½ï¿½
 			cmd_type = UAVCmd.RIGHT_LEFT;
 			cmd_data = (int)(RIGHT_LEFT_MIN+progress);
 			break;	
-		case R.id.skb3:		//Ğı×ª
+		case R.id.skb3:		//ï¿½ï¿½×ª
 			cmd_type = UAVCmd.ROTATE;
 			cmd_data = (int)(ROTATE_MIN+progress);
 			break;
-		case R.id.skb4:		//Ç°ºó
+		case R.id.skb4:		//Ç°ï¿½ï¿½
 			cmd_type = UAVCmd.FORWARD_BACK;
 			cmd_data = (int)(FORWARD_BACK_MIN+progress);
 			break;
@@ -198,16 +198,16 @@ public class MainActivity extends Activity implements OnLongClickListener, OnSee
 		int cmd_type = 0;
 		seekBar.setProgress(seekBar.getMax()/2);
 		switch (seekBar.getId()) {
-		case R.id.skb1:		//ÓÍÃÅ
+		case R.id.skb1:		//ï¿½ï¿½ï¿½ï¿½
 			cmd_type = UAVCmd.ACCELERATOR;
 			break;
-		case R.id.skb2:		//×óÓÒ
+		case R.id.skb2:		//ï¿½ï¿½ï¿½ï¿½
 			cmd_type = UAVCmd.RIGHT_LEFT;
 			break;
-		case R.id.skb3:		//Ğı×ª
+		case R.id.skb3:		//ï¿½ï¿½×ª
 			cmd_type = UAVCmd.ROTATE;
 			break;
-		case R.id.skb4:		//Ç°ºó
+		case R.id.skb4:		//Ç°ï¿½ï¿½
 			cmd_type = UAVCmd.FORWARD_BACK;
 			break;
 		default:
@@ -235,18 +235,18 @@ public class MainActivity extends Activity implements OnLongClickListener, OnSee
 	}
 	
 	/**
-	 * ´´½¨Á¬½Ó·şÎñÆ÷Ïß³ÌÈ¥Á¬½Ó·şÎñÆ÷
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß³ï¿½È¥ï¿½ï¿½ï¿½Ó·ï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
 	private void ConnectToServer(){
 		connectServer = new ConnectServer(ipAddress.getText().toString(), PORT, handler);	
 		connectServer.start();
-		//±£´æIPµØÖ·
+		//ï¿½ï¿½ï¿½ï¿½IPï¿½ï¿½Ö·
 		preferences_editor.putString("ipaddr", ipAddress.getText().toString());
 		preferences_editor.commit();
 	}
 	
 	/**
-	 * °ÑÎŞÈË»ú²Ù×÷ÃüÁî·¢ËÍ¸ø·şÎñÆ÷
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½î·¢ï¿½Í¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * @param cmd
 	 */
 	private void SendCmdToServer(ConnectServer thread , int cmd){
@@ -256,7 +256,7 @@ public class MainActivity extends Activity implements OnLongClickListener, OnSee
 	}
 	
 	/**
-     * ¸Ã·½·¨ÓÃÀ´enable/disableÕâ¼¸¸ö¿Ø¼ş£¬Ö»ÓĞ³É¹¦Á¬½Ó·şÎñÆ÷ÒÔºó£¬ÕâĞ©¿Ø¼ş²Å¿ÉÓÃ
+     * ï¿½Ã·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½enable/disableï¿½â¼¸ï¿½ï¿½ï¿½Ø¼ï¿½ï¿½ï¿½Ö»ï¿½Ğ³É¹ï¿½ï¿½ï¿½ï¿½Ó·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôºï¿½ï¿½ï¿½Ğ©ï¿½Ø¼ï¿½ï¿½Å¿ï¿½ï¿½ï¿½
     */
     private void setEnable(boolean enabled){
     	skb_accelerator.setEnabled(enabled);
